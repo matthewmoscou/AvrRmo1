@@ -5,6 +5,7 @@ Identification of *AvrRmo1*
 To identify the gene underlying recognition by *Rmo1* in *Magnaporthe oryzae*. Mutagenesis and natural variation were used to identify *AvrRmo1*. UV mutagenesis was carried out on *M. oryzae* isolate Ken54-20. Approximately 15 independent mutants were identified.
 
 ## Trimmomatic
+`Trimmomatic` was used to trim reads prior to *de novo* genome assembly using `minia`.
 
 ```bash
 java -jar trimmomatic-0.39.jar PE -threads 16 -phred33 DG_001_1_400_1.fq DG_001_1_400_2.fq DG_001_1_400_gDNA_forward_paired.fq DG_001_1_400_gDNA_forward_unpaired.fq DG_001_1_400_gDNA_reverse_paired.fq DG_001_1_400_gDNA_reverse_unpaired.fq ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:5 TRAILING:5 SLIDINGWINDOW:4:10 MINLEN:36 > DG_001_1_400_trimmomatic.run.log 2>&1 &
@@ -12,7 +13,6 @@ java -jar trimmomatic-0.39.jar PE -threads 16 -phred33 DG_001_1_600_1.fq DG_001_
 java -jar trimmomatic-0.39.jar PE -threads 16 -phred33 DG_001_2_400_1.fq DG_001_2_400_2.fq DG_001_2_400_gDNA_forward_paired.fq DG_001_2_400_gDNA_forward_unpaired.fq DG_001_2_400_gDNA_reverse_paired.fq DG_001_2_400_gDNA_reverse_unpaired.fq ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:5 TRAILING:5 SLIDINGWINDOW:4:10 MINLEN:36 > DG_001_2_400_trimmomatic.run.log 2>&1 &
 java -jar trimmomatic-0.39.jar PE -threads 16 -phred33 DG_001_2_600_1.fq DG_001_2_600_2.fq DG_001_2_600_gDNA_forward_paired.fq DG_001_2_600_gDNA_forward_unpaired.fq DG_001_2_600_gDNA_reverse_paired.fq DG_001_2_600_gDNA_reverse_unpaired.fq ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:5 TRAILING:5 SLIDINGWINDOW:4:10 MINLEN:36 > DG_001_2_600_trimmomatic.run.log 2>&1 &
 ```
-
 
 ## Jellyfish
 To confirm the quality of Illumina sequencing and confirm genome size of *M. oryzae* isolate Ken54-20, we used `jellyfish`.
@@ -33,16 +33,16 @@ jellyfish histo -h 3000000 -o MoKen5420m1_jellyfish_24mer.histo MoKen5420m1_jell
 
 Both wild-type and mutant had identical *k*-mer distributions that fit the expected model of a haploid species.
 
-> GenomeScope version 1.0
-> k = 24
-> 
-> property                      min               max               
-> Heterozygosity                0.0595689%        0.0607236%        
-> Genome Haploid Length         49,919,238 bp     49,927,451 bp     
-> Genome Repeat Length          12,870,673 bp     12,872,791 bp     
-> Genome Unique Length          37,048,565 bp     37,054,661 bp     
-> Model Fit                     95.4049%          96.6713%          
-> Read Error Rate               0.199458%         0.199458%         
+> GenomeScope version 1.0  
+> k = 24  
+>   
+> property                      min               max                 
+> Heterozygosity                0.0595689%        0.0607236%          
+> Genome Haploid Length         49,919,238 bp     49,927,451 bp       
+> Genome Repeat Length          12,870,673 bp     12,872,791 bp       
+> Genome Unique Length          37,048,565 bp     37,054,661 bp       
+> Model Fit                     95.4049%          96.6713%            
+> Read Error Rate               0.199458%         0.199458%           
 
 To visualise the results in `R`, the following code can be used after adding a header to the `jellyfish histo` output.
 
@@ -87,16 +87,16 @@ gunzip -c fastq_runid_72ad5b4694bd5d06ce9c9be9a574a74b8f384a20_0.fastq.gz | Nano
 
 NanoPore sequencing result for June 2019.
 
-> numReads: 848,839
-> %totalNumReads: 100.00
-> numBasepairs: 11,257,175,152
-> %totalBasepairs: 100.00
-> meanLen: 13,262
-> medianLen: 4,529
-> minLen: 1
-> maxLen: 238,793
-> N50: 35,770
-> L50: 94,871
+> numReads: 848,839  
+> %totalNumReads: 100.00  
+> numBasepairs: 11,257,175,152  
+> %totalBasepairs: 100.00  
+> meanLen: 13,262  
+> medianLen: 4,529  
+> minLen: 1  
+> maxLen: 238,793  
+> N50: 35,770  
+> L50: 94,871  
 
 ## Assembly of *M. oryzae* isolate Ken54-20
 ### Kmergenie
@@ -135,29 +135,29 @@ We built three assemblies (v1, v2, and v3) using an original poor quality ONT se
 
 The final assembly had the following statistics:
 
-> v1
-> N50 655,584
-> Sequence 44,835,622
-> Average 311,358
-> E-size 748,645
-> Count 144
+> v1  
+> N50 655,584  
+> Sequence 44,835,622  
+> Average 311,358  
+> E-size 748,645  
+> Count 144  
 
-> v2
-> N50 5,941,966
-> Sequence 47,427,932
-> Average 1.05395e+06
-> E-size 7.17211e+06
-> Count 45
+> v2  
+> N50 5,941,966  
+> Sequence 47,427,932  
+> Average 1.05395e+06  
+> E-size 7.17211e+06  
+> Count 45  
 
-> v3
-> N50 3,032,866
-> Sequence 47,904,193
-> Average 1.22831e+06
-> E-size 3.62593e+06
-> Count 39
+> v3  
+> N50 3,032,866  
+> Sequence 47,904,193  
+> Average 1.22831e+06  
+> E-size 3.62593e+06  
+> Count 39  
 
 #### Genome polishing
-[Pilon](https://github.com/broadinstitute/pilon) was used to correct the *M. oryzae* Ken54-20 genome. Alignment of reads was performed using Bowtie2 and BWA, with BWA selected as the preferred aligner due to lower called SNPs and manually assessment of putative SNPs (i.e. BWA has less false positives).
+[Pilon](https://github.com/broadinstitute/pilon) was used to correct the *M. oryzae* Ken54-20 genome. Alignment of reads was performed using Bowtie2 and BWA, with BWA selected as the preferred aligner due to lower called SNPs and manually assessment of putative SNPs (i.e. BWA had less false positives). The commands below were iteratively run on subsequent polished genomes.
 
 ##### Bowtie2
 ```bash
@@ -201,11 +201,10 @@ java -Xmx100G -jar pilon-1.23.jar --genome MoKen5420.masurca.contigs.v3.fa --fra
 ```
 
 ### Assessment of assembly
+We initially used three major strategies to assess the quality of the genome. Earlier, we used the number of SNPs present after polishing as a metric. Below, we use the K-mer Analysis Toolkit to assess the completeness of the genome and BUSCO (based on Augustus gene models) to determine completeness of the genome.
 
 #### K-mer Analysis Toolkit (KAT)
-We assessed the quality 
-
-[KAT](https://github.com/TGAC/KAT)
+We assessed the quality of the assembled, polished genome using [KAT](https://github.com/TGAC/KAT). Using the comp command, we can compare Illumina reads against the assembled reference genome (v3.4).
 
 ```bash
 kat hist -t 96 DG_001_1_*
@@ -225,6 +224,7 @@ augustus --species=magnaporthe_grisea --strand=both MoKen5420.masurca.contigs.v3
 ```
 
 #### BUSCO
+[BUSCO](https://busco.ezlab.org/) is the benchmarking universal single-copy orthologous gene sets that can be used to assess the completeness of a genome. First, coding sequences are extracted from the genome based on Augustus prediction and then BUSCO ran on these predicted transcripts.
 
 ```bash
 gffread GCF_000002495.2_MG8_genomic.augustus.gff3 -g GCF_000002495.2_MG8_genomic.fa -x GCF_000002495.2_MG8_genomic.augustus.cds.fa
@@ -240,47 +240,48 @@ python scripts/run_BUSCO.py -i ../annotation/MoKen5420.masurca.contigs.v2.pilon.
 python scripts/run_BUSCO.py -i ../annotation/MoKen5420.masurca.contigs.v3.4.augustus.cds.fa -l ascomycota_odb9 -o MoKen5420.masurca.contigs.v3.4.augustus.cds -m transcriptome -c 16
 ```
 
-> M. oryzae 70-15
-> INFO	Results:
-> INFO	C:97.2%[S:97.0%,D:0.2%],F:2.3%,M:0.5%,n:1315
-> INFO	1279 Complete BUSCOs (C)
-> INFO	1276 Complete and single-copy BUSCOs (S)
-> INFO	3 Complete and duplicated BUSCOs (D)
-> INFO	30 Fragmented BUSCOs (F)
-> INFO	6 Missing BUSCOs (M)
-> INFO	1315 Total BUSCO groups searched
+> M. oryzae 70-15  
+> INFO	Results:  
+> INFO	C:97.2%[S:97.0%,D:0.2%],F:2.3%,M:0.5%,n:1315  
+> INFO	1279 Complete BUSCOs (C)  
+> INFO	1276 Complete and single-copy BUSCOs (S)  
+> INFO	3 Complete and duplicated BUSCOs (D)  
+> INFO	30 Fragmented BUSCOs (F)  
+> INFO	6 Missing BUSCOs (M)  
+> INFO	1315 Total BUSCO groups searched  
 
-> M. oryzae Ken54-20 v1
-> INFO	Results:
-> INFO	C:95.7%[S:95.2%,D:0.5%],F:2.1%,M:2.2%,n:1315
-> INFO	1258 Complete BUSCOs (C)
-> INFO	1252 Complete and single-copy BUSCOs (S)
-> INFO	6 Complete and duplicated BUSCOs (D)
-> INFO	28 Fragmented BUSCOs (F)
-> INFO	29 Missing BUSCOs (M)
-> INFO	1315 Total BUSCO groups searched
+> M. oryzae Ken54-20 v1  
+> INFO	Results:  
+> INFO	C:95.7%[S:95.2%,D:0.5%],F:2.1%,M:2.2%,n:1315  
+> INFO	1258 Complete BUSCOs (C)  
+> INFO	1252 Complete and single-copy BUSCOs (S)  
+> INFO	6 Complete and duplicated BUSCOs (D)  
+> INFO	28 Fragmented BUSCOs (F)  
+> INFO	29 Missing BUSCOs (M)  
+> INFO	1315 Total BUSCO groups searched  
 
-> M. oryzae Ken54-20 v2
-> INFO	Results:
-> INFO	C:98.0%[S:96.1%,D:1.9%],F:1.7%,M:0.3%,n:1315
-> INFO	1289 Complete BUSCOs (C)
-> INFO	1264 Complete and single-copy BUSCOs (S)
-> INFO	25 Complete and duplicated BUSCOs (D)
-> INFO	22 Fragmented BUSCOs (F)
-> INFO	4 Missing BUSCOs (M)
-> INFO	1315 Total BUSCO groups searched
+> M. oryzae Ken54-20 v2  
+> INFO	Results:  
+> INFO	C:98.0%[S:96.1%,D:1.9%],F:1.7%,M:0.3%,n:1315  
+> INFO	1289 Complete BUSCOs (C)  
+> INFO	1264 Complete and single-copy BUSCOs (S)  
+> INFO	25 Complete and duplicated BUSCOs (D)  
+> INFO	22 Fragmented BUSCOs (F)  
+> INFO	4 Missing BUSCOs (M)  
+> INFO	1315 Total BUSCO groups searched  
 
-> M. oryzae Ken54-20 v3.4
-> INFO	Results:
-> INFO  C:97.9%[S:95.5%,D:2.4%],F:1.7%,M:0.4%,n:1315
-> INFO  1288    Complete BUSCOs (C)
-> INFO  1256    Complete and single-copy BUSCOs (S)
-> INFO  32      Complete and duplicated BUSCOs (D)
-> INFO  23      Fragmented BUSCOs (F)
-> INFO  4       Missing BUSCOs (M)
-> INFO  1315    Total BUSCO groups searched
+> M. oryzae Ken54-20 v3.4  
+> INFO	Results:  
+> INFO  C:97.9%[S:95.5%,D:2.4%],F:1.7%,M:0.4%,n:1315  
+> INFO  1288    Complete BUSCOs (C)  
+> INFO  1256    Complete and single-copy BUSCOs (S)  
+> INFO  32      Complete and duplicated BUSCOs (D)  
+> INFO  23      Fragmented BUSCOs (F)  
+> INFO  4       Missing BUSCOs (M)  
+> INFO  1315    Total BUSCO groups searched  
 
-## Evaluating the assembly using long NanoPore reads
+#### Self-alignment of Nanopore reads
+Nanopore reads were aligned to the reference in order to assess quality and continuity in IGV.
 
 ```bash
 gunzip -c mgg_ken54_20duo.fastq.gz | NanoFilt -q 12 --headcrop 75 -l 10000 | gzip > mgg_ken54_20duo_trimmed.fastq.gz
@@ -300,9 +301,9 @@ samtools sort -@ 72 -o MoKen5420.masurca.contigs.v3.4_mgg_ken54_20duo_trimmed.so
 bedtools genomecov -d -split -ibam MoKen5420.masurca.contigs.v3.4_mgg_ken54_20duo_trimmed.sorted.bam > MoKen5420.masurca.contigs.v3.4_mgg_ken54_20duo_trimmed.sorted.genomecov.txt
 ```
 
-## Identifying SNPs in wild-type versus mutants
+#### Self-alignment of Illumina reads
+Illumina reads were aligned to the reference in order to assess quality, continuity, and SNP in mutant relative to wild-type in IGV.
 
-### BWA-MEM
 ```bash
 bwa index MoKen5420.masurca.contigs.v3.4.fa
 
@@ -331,161 +332,4 @@ samtools sort -@ 72 -o MoKen5420_wt_mt_v3.4_600.sorted.bam MoKen5420_wt_mt_v3.4_
 samtools rmdup MoKen5420_wt_mt_v3.4_600.sorted.bam MoKen5420_wt_mt_v3.4_600.sorted.rmdup.bam
 
 samtools merge -@ 72 MoKen5420_wt_mt_v3.4.sorted.rmdup.bam MoKen5420_wt_mt_v3.4_400.sorted.rmdup.bam MoKen5420_wt_mt_v3.4_600.sorted.rmdup.bam
-```
-
-## Code below is depreciated
-### BBmap
-
-```bash
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.fa in1=DG_001_2_400_1.fq in2=DG_001_2_400_2.fq minid=0.98 maxindel=1 outm=MoKen5420_wt_mt_400.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.fa in1=DG_001_2_600_1.fq in2=DG_001_2_600_2.fq minid=0.98 maxindel=1 outm=MoKen5420_wt_mt_600.sam
-
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_1_400_1.fq in2=DG_001_1_400_2.fq minid=0.98 maxindel=1 outm=MoKen5420_v2_wt_wt_400.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_1_600_1.fq in2=DG_001_1_600_2.fq minid=0.98 maxindel=1 outm=MoKen5420_v2_wt_wt_600.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_2_400_1.fq in2=DG_001_2_400_2.fq minid=0.98 maxindel=1 outm=MoKen5420_v2_wt_mt_400.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_2_600_1.fq in2=DG_001_2_600_2.fq minid=0.98 maxindel=1 outm=MoKen5420_v2_wt_mt_600.sam
-
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_1_400_1.fq in2=DG_001_1_400_2.fq outm=MoKen5420_v2_wt_wt_400.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_1_600_1.fq in2=DG_001_1_600_2.fq outm=MoKen5420_v2_wt_wt_600.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_2_400_1.fq in2=DG_001_2_400_2.fq outm=MoKen5420_v2_wt_mt_400.sam
-bbmap/bbmap.sh ref=MoKen5420.masurca.contigs.v2.fa in1=DG_001_2_600_1.fq in2=DG_001_2_600_2.fq outm=MoKen5420_v2_wt_mt_600.sam
-```
-
-### Bowtie2
-
-```bash
-bowtie2-build --threads 16 MoKen5420.masurca.contigs.v2.fa MoKen5420.masurca.contigs
-
-bowtie2 -p 16 -x MoKen5420.masurca.contigs -1 DG_001_1_400_1.fq,DG_001_1_600_1.fq -2 DG_001_1_400_2.fq,DG_001_1_600_2.fq -S MoKen5420_wt_wt.sam
-bowtie2 -p 16 -x MoKen5420.masurca.contigs -1 DG_001_2_400_1.fq,DG_001_2_600_1.fq -2 DG_001_2_400_2.fq,DG_001_2_600_2.fq -S MoKen5420_wt_mt.sam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_wt.bam MoKen5420_wt_wt.sam
-samtools sort -@ 16 -o MoKen5420_wt_wt.sorted.bam MoKen5420_wt_wt.bam
-samtools rmdup MoKen5420_wt_wt.sorted.bam MoKen5420_wt_wt.sorted.rmdup.bam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_mt.bam MoKen5420_wt_mt.sam
-samtools sort -@ 16 -o MoKen5420_wt_mt.sorted.bam MoKen5420_wt_mt.bam
-samtools rmdup MoKen5420_wt_mt.sorted.bam MoKen5420_wt_mt.sorted.rmdup.bam
-
-
-samtools index -@ 16 MoKen5420_wt_mt.sorted.rmdup.bam
-samtools mpileup -f MoKen5420.masurca.contigs.fa -BQ0 MoKen5420_wt_mt.sorted.rmdup.bam > MoKen5420_wt_mt.sorted.rmdup.pileup.txt
-bedtools genomecov -d -split -ibam MoKen5420_wt_mt.sorted.rmdup.bam > MoKen5420_wt_mt.sorted.rmdup.genomecov.txt
-
-java -jar VarScan.v2.3.8.jar mpileup2snp MoKen5420_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_wt_mt.sorted.rmdup.pileupsnp.txt
-java -jar VarScan.v2.3.8.jar mpileup2indel MoKen5420_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_wt_mt.sorted.rmdup.pileupindel.txt
-
-```
-
-### VarScan
-
-```bash
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_mt_400.bam MoKen5420_wt_mt_400.sam
-samtools sort -@ 16 -o MoKen5420_wt_mt_400.sorted.bam MoKen5420_wt_mt_400.bam
-samtools rmdup MoKen5420_wt_mt_400.sorted.bam MoKen5420_wt_mt_400.sorted.rmdup.bam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_mt_600.bam MoKen5420_wt_mt_600.sam
-samtools sort -@ 16 -o MoKen5420_wt_mt_600.sorted.bam MoKen5420_wt_mt_600.bam
-samtools rmdup MoKen5420_wt_mt_600.sorted.bam MoKen5420_wt_mt_600.sorted.rmdup.bam
-
-samtools merge MoKen5420_wt_mt.sorted.rmdup.bam MoKen5420_wt_mt_400.sorted.rmdup.bam MoKen5420_wt_mt_600.sorted.rmdup.bam
-
-samtools index -@ 16 MoKen5420_wt_mt.sorted.rmdup.bam
-samtools mpileup -f MoKen5420.masurca.contigs.fa -BQ0 MoKen5420_wt_mt.sorted.rmdup.bam > MoKen5420_wt_mt.sorted.rmdup.pileup.txt
-bedtools genomecov -d -split -ibam MoKen5420_wt_mt.sorted.rmdup.bam > MoKen5420_wt_mt.sorted.rmdup.genomecov.txt
-
-java -jar VarScan.v2.3.8.jar mpileup2snp MoKen5420_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_wt_mt.sorted.rmdup.pileupsnp.txt
-java -jar VarScan.v2.3.8.jar mpileup2indel MoKen5420_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_wt_mt.sorted.rmdup.pileupindel.txt
-```
-
-```bash
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_wt_400.bam MoKen5420_wt_wt_400.sam
-samtools sort -@ 16 -o MoKen5420_wt_wt_400.sorted.bam MoKen5420_wt_wt_400.bam
-samtools rmdup MoKen5420_wt_wt_400.sorted.bam MoKen5420_wt_wt_400.sorted.rmdup.bam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_wt_wt_600.bam MoKen5420_wt_wt_600.sam
-samtools sort -@ 16 -o MoKen5420_wt_wt_600.sorted.bam MoKen5420_wt_wt_600.bam
-samtools rmdup MoKen5420_wt_wt_600.sorted.bam MoKen5420_wt_wt_600.sorted.rmdup.bam
-
-samtools merge MoKen5420_wt_wt.sorted.rmdup.bam MoKen5420_wt_wt_400.sorted.rmdup.bam MoKen5420_wt_wt_600.sorted.rmdup.bam
-
-samtools index -@ 16 MoKen5420_wt_wt.sorted.rmdup.bam
-samtools mpileup -f MoKen5420.masurca.contigs.fa -BQ0 MoKen5420_wt_wt.sorted.rmdup.bam > MoKen5420_wt_wt.sorted.rmdup.pileup.txt
-bedtools genomecov -d -split -ibam MoKen5420_wt_wt.sorted.rmdup.bam > MoKen5420_wt_wt.sorted.rmdup.genomecov.txt
-
-java -jar VarScan.v2.3.8.jar mpileup2snp MoKen5420_wt_wt.sorted.rmdup.pileup.txt > MoKen5420_wt_wt.sorted.rmdup.pileupsnp.txt
-java -jar VarScan.v2.3.8.jar mpileup2indel MoKen5420_wt_wt.sorted.rmdup.pileup.txt > MoKen5420_wt_wt.sorted.rmdup.pileupindel.txt
-```
-
-```bash
-samtools view -@ 16 -f2 -Shub -o MoKen5420_v2_wt_mt_400.bam MoKen5420_v2_wt_mt_400.sam
-samtools sort -@ 16 -o MoKen5420_v2_wt_mt_400.sorted.bam MoKen5420_v2_wt_mt_400.bam
-samtools rmdup MoKen5420_v2_wt_mt_400.sorted.bam MoKen5420_v2_wt_mt_400.sorted.rmdup.bam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_v2_wt_mt_600.bam MoKen5420_v2_wt_mt_600.sam
-samtools sort -@ 16 -o MoKen5420_v2_wt_mt_600.sorted.bam MoKen5420_v2_wt_mt_600.bam
-samtools rmdup MoKen5420_v2_wt_mt_600.sorted.bam MoKen5420_v2_wt_mt_600.sorted.rmdup.bam
-
-samtools merge MoKen5420_v2_wt_mt.sorted.rmdup.bam MoKen5420_v2_wt_mt_400.sorted.rmdup.bam MoKen5420_v2_wt_mt_600.sorted.rmdup.bam
-
-samtools index -@ 16 MoKen5420_v2_wt_mt.sorted.rmdup.bam
-samtools mpileup -f MoKen5420.masurca.contigs.fa -BQ0 MoKen5420_v2_wt_mt.sorted.rmdup.bam > MoKen5420_v2_wt_mt.sorted.rmdup.pileup.txt
-bedtools genomecov -d -split -ibam MoKen5420_v2_wt_mt.sorted.rmdup.bam > MoKen5420_v2_wt_mt.sorted.rmdup.genomecov.txt
-
-java -jar VarScan.v2.3.8.jar mpileup2snp MoKen5420_v2_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_v2_wt_mt.sorted.rmdup.pileupsnp.txt
-java -jar VarScan.v2.3.8.jar mpileup2indel MoKen5420_v2_wt_mt.sorted.rmdup.pileup.txt > MoKen5420_v2_wt_mt.sorted.rmdup.pileupindel.txt
-```
-
-```bash
-samtools view -@ 16 -f2 -Shub -o MoKen5420_v2_wt_wt_400.bam MoKen5420_v2_wt_wt_400.sam
-samtools sort -@ 16 -o MoKen5420_v2_wt_wt_400.sorted.bam MoKen5420_v2_wt_wt_400.bam
-samtools rmdup MoKen5420_v2_wt_wt_400.sorted.bam MoKen5420_v2_wt_wt_400.sorted.rmdup.bam
-
-samtools view -@ 16 -f2 -Shub -o MoKen5420_v2_wt_wt_600.bam MoKen5420_v2_wt_wt_600.sam
-samtools sort -@ 16 -o MoKen5420_v2_wt_wt_600.sorted.bam MoKen5420_v2_wt_wt_600.bam
-samtools rmdup MoKen5420_v2_wt_wt_600.sorted.bam MoKen5420_v2_wt_wt_600.sorted.rmdup.bam
-
-samtools merge MoKen5420_v2_wt_wt.sorted.rmdup.bam MoKen5420_v2_wt_wt_400.sorted.rmdup.bam MoKen5420_v2_wt_wt_600.sorted.rmdup.bam
-
-samtools index -@ 16 MoKen5420_v2_wt_wt.sorted.rmdup.bam
-samtools mpileup -f MoKen5420.masurca.contigs.fa -BQ0 MoKen5420_v2_wt_wt.sorted.rmdup.bam > MoKen5420_v2_wt_wt.sorted.rmdup.pileup.txt
-bedtools genomecov -d -split -ibam MoKen5420_v2_wt_wt.sorted.rmdup.bam > MoKen5420_v2_wt_wt.sorted.rmdup.genomecov.txt
-
-java -jar VarScan.v2.3.8.jar mpileup2snp MoKen5420_v2_wt_wt.sorted.rmdup.pileup.txt > MoKen5420_v2_wt_wt.sorted.rmdup.pileupsnp.txt
-java -jar VarScan.v2.3.8.jar mpileup2indel MoKen5420_v2_wt_wt.sorted.rmdup.pileup.txt > MoKen5420_v2_wt_wt.sorted.rmdup.pileupindel.txt
-```
-
-
-
-### BBmap callvariants.sh
-
-```bash
-./bbmap/callvariants.sh in=MoKen5420_wt_mt.sorted.rmdup.bam ref=MoKen5420.masurca.contigs.fa out=MoKen5420_wt_mt.sorted.rmdup.callvariants.vcf outgff=MoKen5420_wt_mt.sorted.rmdup.callvariants.gff3
-./bbmap/callvariants.sh in=MoKen5420_wt_wt.sorted.rmdup.bam ref=MoKen5420.masurca.contigs.fa out=MoKen5420_wt_wt.sorted.rmdup.callvariants.vcf outgff=MoKen5420_wt_wt.sorted.rmdup.callvariants.gff3
-
-./bbmap/callvariants.sh in=MoKen5420_v2_wt_mt.sorted.rmdup.bam ref=MoKen5420.masurca.contigs.v2.fa out=MoKen5420_v2_wt_mt.sorted.rmdup.callvariants.vcf outgff=MoKen5420_v2_wt_mt.sorted.rmdup.callvariants.gff3
-./bbmap/callvariants.sh in=MoKen5420_v2_wt_wt.sorted.rmdup.bam ref=MoKen5420.masurca.contigs.v2.fa out=MoKen5420_v2_wt_wt.sorted.rmdup.callvariants.vcf outgff=MoKen5420_v2_wt_wt.sorted.rmdup.callvariants.gff3
-```
-
-
-```bash
-gffread MoKen5420.masurca.contigs.augustus.gff3 -g MoKen5420.masurca.contigs.fa -y MoKen5420.masurca.contigs.augustus.protein.fa
-python EffectorP.py -i ../../MoKen5420.masurca.contigs.augustus.protein.fa
-
-gffread MoKen5420.masurca.contigs.v2.augustus.gff3 -g MoKen5420.masurca.contigs.v2.fa -y MoKen5420.masurca.contigs.v2.augustus.protein.fa
-python EffectorP.py -i ../../MoKen5420.masurca.contigs.v2.augustus.protein.fa
-
-gffread MoKen5420.masurca.contigs.v2.pilon.augustus.gff3 -g MoKen5420.masurca.contigs.v2.pilon.fa -y MoKen5420.masurca.contigs.v2.pilon.augustus.protein.fa
-python EffectorP.py -i ../../MoKen5420.masurca.contigs.v2.pilon.augustus.protein.fa
-```
-
-```bash
-python analyze_SNPs.py
-```
-
-```bash
-nucmer --maxmatch -l 100 -c 500 Maggr1_AssemblyScaffolds.fasta MoKen5420.masurca.contigs.v3.4.fa --prefix Maggr1_Ken5420 -t 4
-nucmer --maxmatch -l 100 -c 500 Magnaporthe_oryzae.MG8.dna.toplevel.fa MoKen5420.masurca.contigs.v3.4.fa --prefix MG8_Ken5420 -t 4
-nucmer --maxmatch -l 100 -c 500 guy11_smartdenovo_polished.fasta MoKen5420.masurca.contigs.v3.4.fa --prefix Guy11_Ken5420 -t 4
-nucmer --maxmatch -l 100 -c 500 KE002_Pacbio_42_contigs.fa MoKen5420.masurca.contigs.v3.4.fa --prefix KE002_Ken5420 -t 4
 ```
